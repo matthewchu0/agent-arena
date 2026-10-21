@@ -31,6 +31,25 @@ const baseProvider: ProviderConfig = {
 };
 
 describe('ProviderRegistry', () => {
+  it('builds a sandboxed interactive Codex command with the requested model and prompt', () => {
+    const registry = new ProviderRegistry();
+    const command = buildProviderCommand(
+      registry.get('codex'),
+      { ...variant, provider: 'codex', model: 'configured-codex-model' },
+      'Inspect the worktree and implement the requirements.',
+      5
+    );
+
+    expect(command).toEqual({
+      command: 'codex',
+      args: [
+        '--sandbox', 'workspace-write', '--ask-for-approval', 'never', '--no-alt-screen',
+        '--model', 'configured-codex-model',
+        'Inspect the worktree and implement the requirements.'
+      ]
+    });
+  });
+
   it('includes built-in providers', () => {
     const registry = new ProviderRegistry();
     expect(registry.get('copilot-cli').command).toBe('copilot');

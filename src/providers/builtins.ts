@@ -10,6 +10,14 @@ const MODEL_DISCOVERY_PROMPT =
   'list the names of the models available to you. Output ONLY the model names, one per line, nothing else.';
 
 export const BUILTIN_PROVIDERS: Record<string, ProviderConfig> = {
+  codex: {
+    command: 'codex',
+    baseArgs: ['--sandbox', 'workspace-write', '--ask-for-approval', 'never', '--no-alt-screen'],
+    modelFlag: '--model',
+    promptDelivery: 'positional',
+    exitCommand: '/quit',
+    completionProtocol: { ...DEFAULT_COMPLETION_PROTOCOL }
+  },
   'copilot-cli': {
     command: 'copilot',
     baseArgs: ['--autopilot', '--yolo'],

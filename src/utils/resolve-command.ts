@@ -23,8 +23,9 @@ export const resolveCommand = (command: string): string => {
       timeout: 10_000
     }).trim();
 
-    // `where` on Windows may return multiple lines — take the first match
-    const resolved = result.split(/\r?\n/)[0]?.trim();
+    // ConPTY needs a native executable rather than an extensionless npm shim.
+    const matches = result.split(/\r?\n/).map((match) => match.trim());
+    const resolved = (isWindows ? matches.find((match) => /\.exe$/i.test(match)) : undefined) ?? matches[0];
     if (!resolved) throw new Error('empty result');
     return resolved;
   } catch {

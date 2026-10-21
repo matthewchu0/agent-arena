@@ -1,8 +1,28 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
+import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { resolveCommand } from './resolve-command';
 
 describe('resolveCommand', () => {
+  it.skipIf(process.platform !== 'win32')('prefers an executable after an npm shim on Windows PATH', () => {
+    const root = mkdtempSync(path.join(os.tmpdir(), 'arena-resolve-'));
+    const shimDir = path.join(root, 'shim');
+    const nativeDir = path.join(root, 'native');
+    mkdirSync(shimDir);
+    mkdirSync(nativeDir);
+    writeFileSync(path.join(shimDir, 'arena-codex-launch-test'), '#!/bin/sh');
+    writeFileSync(path.join(shimDir, 'arena-codex-launch-test.cmd'), '@echo off');
+    const executable = path.join(nativeDir, 'arena-codex-launch-test.exe');
+    writeFileSync(executable, 'fixture');
+    vi.stubEnv('PATH', `${shimDir};${nativeDir};${process.env.PATH}`);
+    try {
+      expect(resolveCommand('arena-codex-launch-test')).toBe(executable);
+    } finally {
+      vi.unstubAllEnvs();
+    }
+  });
+
   it('resolves a known command to an absolute path', () => {
     const resolved = resolveCommand('node');
     expect(path.isAbsolute(resolved)).toBe(true);

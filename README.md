@@ -255,8 +255,11 @@ Arena names must be:
 
 Built-in providers:
 
+- `codex` (this fork): interactive Codex CLI with the workspace-write sandbox; set each variant's `model` to your configured Codex model. The provider does not disable sandbox enforcement or run model-discovery completions.
 - `copilot-cli`
 - `claude-code`
+
+For Codex's reusable workflow, install [`arena-prototypes`](skills/arena-prototypes/SKILL.md) into your personal skills directory. Invoke `$arena-prototypes` for parallel implementations; use the separate `arena-debate` or `arena-tournament` skills for reviews or elimination tournaments.
 
 Custom providers can override built-ins or define new ones:
 

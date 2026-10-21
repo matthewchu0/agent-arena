@@ -180,6 +180,8 @@ src/
 
 ## Cross-Platform Strategy
 
+This fork adds a built-in `codex` provider using the interactive CLI, positional prompt delivery, and the workspace-write sandbox. Its model comes from the variant configuration; it does not make an extra model-discovery request or edit Codex's global configuration.
+
 ### PTY
 
 `node-pty` provides a single API while still using native PTY/ConPTY implementations per OS.
