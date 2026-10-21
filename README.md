@@ -261,6 +261,8 @@ Built-in providers:
 
 For Codex's reusable workflow, install [`arena-prototypes`](skills/arena-prototypes/SKILL.md) into your personal skills directory. Invoke `$arena-prototypes` for parallel implementations; use the separate `arena-debate` or `arena-tournament` skills for reviews or elimination tournaments.
 
+The skill also documents a native Codex worktree route when the host cannot start a PTY. This fallback uses actual Codex subagents and Git worktrees, records the route explicitly, and does not claim that the CLI or its score ran. Windows command resolution prefers a native `.exe` over an extensionless npm shim; a full interactive ConPTY session still needs verification in the target terminal.
+
 Custom providers can override built-ins or define new ones:
 
 ```json

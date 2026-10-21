@@ -22,6 +22,18 @@ Worktree isolation does not isolate external files, network accounts or shared s
 
 ## Run and compare
 
+### Native Codex fallback
+
+If the CLI's PTY cannot start in the current host, report the failure and use this native fallback when the user has authorized running the comparison and native subagents are available. Label the route `native Codex worktree comparison`, not a successful Arena CLI run. A plan-only request still stops without creating files or workers.
+
+Record the selected Git base once. Under a distinct `.arena/native-prototypes/<run>/` directory, create one worktree and branch per candidate from that exact base, using `git worktree add -b <candidate-branch> <candidate-path> <base>`. Verify each branch/path and never overwrite existing worktrees or branches. Use names distinct from CLI-managed arenas. The original checkout and external canonical memory/vault remain outside candidate writes.
+
+Discover the actual native dispatch tools and free slots. Spawn fresh candidate contexts (for `collaboration`, `spawn_agent` with `fork_turns: "none"`) with the same neutral task/evidence plus their assigned strategy and absolute worktree path. Preserve the configured model/effort, honor requested count and concurrency limits, and do not send drafts from one candidate to another. Each worker edits only its assigned worktree and reports its branch, changes, actual checks and unresolved issues. Collect real final results and preserve failures rather than inventing missing candidates.
+
+Inspect each worktree's Git diff and run the project's relevant checks there. Save the raw validation evidence and a comparison report in the run directory; do not fabricate the CLI's deterministic score or treat code size as quality. Select/adopt within the user's authorization. A selected branch can be retained for review or copied to an `accept/` branch; merge, push and cleanup remain separate actions governed by the user. If native dispatch is unavailable too, state that execution is blocked and leave a reproducible plan.
+
+### Arena CLI route
+
 `arena launch <name>` starts the local TUI; `arena launch <name> --headless` plus `arena monitor <name>` separates running from monitoring. Use `arena status <name>` for recorded status. Respect stop requests and report failures; do not replace the user's exact model silently.
 
 Configure `completionVerification.command` to the project's actual relevant validation command when available. Never invent a passing test command. Run `arena evaluate <name>` and inspect `.arena/<name>/comparison-report.md`, the actual changes and validation evidence. Its Git-based score is a comparison aid, not proof of correctness. Report the results and material tradeoffs.
